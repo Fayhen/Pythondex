@@ -70,7 +70,7 @@ pip install -r requirements.txt
 ```
 
 Always remember to activate your virtual enviroment. Following the steps above,
-this will be noticeable by a `(venv)` before the $ or # sign on your terminal.
+this will be noticeable by a `(venv)` before the current working directory.
 
 To run Pythondex in dev mode, run:
 ```batch

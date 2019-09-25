@@ -3,29 +3,32 @@ from server import db
 
 class Types(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String)
-  pokemon = db.relationship("Pokemon", backref="pokemon_type", lazy=True)
+  name = db.Column(db.String, unique=True)
+  pokemon = db.relationship("Pokemon",
+    secondary=lambda: helper_pokemon_type, back_populates="types")
 
 
 class Abilities(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String)
-  description = db.Column(db.String)
-  pokemon = db.relationship("Pokemon", backref="pokemon_ability", lazy=True)
+  name = db.Column(db.String, unique=True)
+  description = db.Column(db.String(120))
+  pokemon = db.relationship("Pokemon",
+    secondary=lambda: helper_pokemon_ability, back_populates="abilities")
 
 
 class Generation(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String)
-  region = db.Column(db.String)
-  games = db.Column(db.String)
-  pokemon = db.relationship("Pokemon", backref="pokemon_game", lazy=True)
+  name = db.Column(db.String, unique=True)
+  region = db.Column(db.String, unique=True)
+  games = db.Column(db.String(120))
+  pokemon = db.relationship("Pokemon",
+    secondary=lambda: helper_pokemon_generation, back_populates="generation")
 
 
 class Pokemon(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  species = db.Column(db.String)
-  description = db.Column(db.String)
+  species = db.Column(db.String, unique=True)
+  description = db.Column(db.String(120))
   height = db.Column(db.Integer)
   weight = db.Column(db.Integer)
   base_attack = db.Column(db.Integer)
@@ -35,15 +38,15 @@ class Pokemon(db.Model):
   base_sp_def = db.Column(db.Integer)
   types = db.relationship("Types",
     secondary = lambda: helper_pokemon_type,
-    back_populates = "pokemons"
+    back_populates = "pokemon"
   )
   abilities = db.relationship("Abilities",
     secondary = lambda: helper_pokemon_ability,
-    back_populates = "pokemons"
+    back_populates = "pokemon"
   )
   generation = db.relationship("Generation",
     secondary = lambda: helper_pokemon_generation,
-    back_populates: 'pokemons'
+    back_populates= "pokemon"
   )
 
 
@@ -55,7 +58,7 @@ helper_pokemon_type = db.Table("helper_pokemon_type",
 
 helper_pokemon_ability = db.Table("helper_pokemon_ability",
   db.Column("pokemon", db.Integer, db.ForeignKey(Pokemon.id)),
-  db.Column("ability", db.Integer, db.ForeignKey(Types.id))
+  db.Column("ability", db.Integer, db.ForeignKey(Abilities.id))
 )
 
 

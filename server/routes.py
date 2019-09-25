@@ -2,7 +2,7 @@ from flask import jsonify, request, make_response
 from server import db
 import server.queries as queries
 import server.schemas as schemas
-import server.GET_utils as fetch
+import server.utils.GET_utils as fetch
 
 
 @app.route("/pokemons/all", methods=["GET"])

@@ -18,3 +18,4 @@ venv.bak/
 # Others
 *.pyc
 *.pyo
+server/pythondex.db
