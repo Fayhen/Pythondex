@@ -33,11 +33,11 @@ class PokemonSchema(ma.ModelSchema):
 
 
 # Schemas initialization
-type_schema = TypesSchema(strict=True)
-types_schema = TypesSchema(many=True, strict=True)
-ability_schema = AbilitiesSchema(strict=True)
-abilities_schema = AbilitiesSchema(many=True, strict=True)
-gen_schema = GenerationSchema(strict=True)
-gens_schema = GenerationSchema(many=True, strict=True)
-pokemon_schema = PokemonSchema(strict=True)
-pokemons_schema = PokemonSchema(many=True, strict=True)
+type_schema = TypesSchema()
+types_schema = TypesSchema(many=True)
+ability_schema = AbilitiesSchema()
+abilities_schema = AbilitiesSchema(many=True)
+gen_schema = GenerationSchema()
+gens_schema = GenerationSchema(many=True)
+pokemon_schema = PokemonSchema()
+pokemons_schema = PokemonSchema(many=True)

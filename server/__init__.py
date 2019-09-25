@@ -10,4 +10,4 @@ cors = CORS(app, resources={r'/*': {'origins': '*'}}) # Restrict on production
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-print("Hello World")
+from server import routes

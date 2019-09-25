@@ -50,7 +50,7 @@ def query_pokemon_gen(id):
   be pre-populated on the database via provided script. Data
   includes currently available Pokémons of this generation.
   """
-  return Generation.query.filter_by(name=generation).first()
+  return Generation.query.get(id)
 
 
 def query_pokemon_region(region):
