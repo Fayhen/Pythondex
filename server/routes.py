@@ -27,7 +27,7 @@ def get_pokemon(id):
       err_msg = "This Pokémon couldn't be found. Have you captured it yet?"
       return make_response(err_msg, 404)
     else:
-      return make_response(jsonify(schemas.pokemon_schema(pokemon)), 200)
+      return make_response(jsonify(schemas.pokemon_schema.dump(pokemon)), 200)
 
   except Exception as e:
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
@@ -52,8 +52,8 @@ def get_gens():
   try:
     gens = queries.query_gens()
     if gens is None:
-      err_msg = "No generations found. Please contact the developer for this issue."
-      return make_response(err_msg, 500)
+      err_msg = "No generations found."
+      return make_response(err_msg, 404)
     else:
       return make_response(jsonify(schemas.gens_schema.dump(gens)), 200)
 
@@ -61,7 +61,7 @@ def get_gens():
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
 
 
-@app.route("/generations/<id>", methods=["GET"])
+@app.route("/generations/<int:id>", methods=["GET"])
 def get_gen_id(id):
   try:
     gen = queries.query_pokemon_gen(id)
@@ -81,7 +81,7 @@ def get_gen(region):
     gen = queries.query_pokemon_region(region)
     if gen is None:
       err_msg = "Region not found. Is it from the future? If not please contact the developer for this issue."
-      make_response(err_msg, 404)
+      return make_response(err_msg, 404)
     else:
       return make_response(jsonify(schemas.gen_schema.dump(gen)), 200)
 
@@ -93,11 +93,11 @@ def get_gen(region):
 def get_gen_pokemons(id):
   try:
     pokemons = fetch.get_pokemons_of_gen(id)
-    if len(pokemons) > 1:
-      return make_response(jsonify(pokemons), 200)
-    else:
+    if pokemons is None:
       err_msg = "No Pokémons found. Have you catched any on this region?"
       return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(pokemons), 200)
 
   except Exception as e:
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
@@ -108,8 +108,8 @@ def get_types():
   try:
     types = queries.query_types()
     if types is None:
-      err_msg = "No Pokémon types found. Please contact the developer for this issue."
-      return make_response(err_msg, 500)
+      err_msg = "No Pokémon types found."
+      return make_response(err_msg, 404)
     else:
       return make_response(jsonify(schemas.types_schema.dump(types)), 200)
 
@@ -149,11 +149,11 @@ def get_type_named(poke_type):
 def get_type_pokemons(id):
   try:
     pokemons = fetch.get_pokemons_of_type(id)
-    if len(pokemons) > 1:
-      return make_response(jsonify(pokemons), 200)
-    else:
+    if pokemons is None:
       err_msg = "No Pokémons of this type found. Have you catched any?"
       return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(pokemons), 200)
 
   except Exception as e:
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
@@ -164,7 +164,7 @@ def get_abilities():
   try:
     abilities = queries.query_abilities()
     if abilities is None:
-      err_msg = "No Pokémon abilities found! have you catched one yet? Else please contact the developer for this issue."
+      err_msg = "No Pokémon abilities found! Have you catched any yet? Else please contact the developer for this issue."
       return make_response(err_msg, 404)
     else:
       return make_response(jsonify(schemas.abilities_schema.dump(abilities)), 200)
@@ -178,7 +178,7 @@ def get_ability(id):
   try:
     ability = queries.query_pokemon_ability_id(id)
     if ability is None:
-      err_msg = "Ability 'id' not found. Please contact the developer for this issue."
+      err_msg = "Ability not found. Have you caught a Pokémon with it yet? Else please contact the developer for this issue."
       return make_response(err_msg, 404)
     else:
       return make_response(jsonify(schemas.ability_schema.dump(ability)), 200)
@@ -205,11 +205,11 @@ def get_ability_named(ability):
 def get_ability_pokemons(id):
   try:
     pokemons = fetch.get_pokemons_with_ability(id)
-    if len(pokemons) > 1:
-      return make_response(jsonify(pokemons), 200)
-    else:
+    if pokemons is None:
       err_msg = "No Pokémons with this ability found. Have you found any that has it yet? Else, please contact the developer for this issue."
       return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(pokemons), 200)
 
   except Exception as e:
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)

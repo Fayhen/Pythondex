@@ -20,13 +20,16 @@ def get_pokemons_of_gen(id):
   HTTP responses.
   """
   gen = queries.query_pokemon_gen(id)
-  pokemons = gen.pokemon
-  pokemon_data = []
-  for pokemon_id in pokemons:
-    raw_data = queries.query_pokemon_id(pokemon)
-    pokemon_data.append(schemas.pokemon_schema.dump(raw_data))
+  if gen is None:
+    return None
+  else:
+    pokemons = gen.pokemon
+    pokemon_data = []
+    # 'pokemons' is already a list of queried Pokémons, thanks to SQLAlchemy:
+    for pokemon in pokemons:
+      pokemon_data.append(schemas.pokemon_schema.dump(pokemon))
 
-  return pokemon_data
+    return pokemon_data
 
 
 def get_pokemons_of_type(id):
@@ -40,13 +43,16 @@ def get_pokemons_of_type(id):
   HTTP responses.
   """
   poke_type = queries.query_pokemon_type_id(id)
-  pokemons = poke_type.pokemon
-  pokemon_data = []
-  for pokemon in pokemons:
-    raw_data = queries.query_pokemon_id(pokemon)
-    pokemon_data.append(schemas.pokemon_schema.dump(raw_data))
-  
-  return pokemon_data
+  if poke_type is None:
+    return None
+  else:
+    pokemons = poke_type.pokemon
+    pokemon_data = []
+    # 'pokemons' is already a list of queried Pokémons, thanks to SQLAlchemy:
+    for pokemon in pokemons:
+      pokemon_data.append(schemas.pokemon_schema.dump(pokemon))
+
+    return pokemon_data
 
 
 def get_pokemons_with_ability(id):
@@ -60,10 +66,14 @@ def get_pokemons_with_ability(id):
   HTTP responses.
   """
   ability = queries.query_pokemon_ability_id(id)
-  pokemons = ability.pokemon
-  pokemon_data = []
-  for pokemon in pokemons:
-    raw_data = queries.query_pokemon_id(pokemon)
-    pokemon_data.append(schemas.pokemon_schema.dump(raw_data))
-  
-  return pokemon_data
+  if ability is None:
+    return None
+  else:
+    pokemons = ability.pokemon
+    pokemon_data = []
+    # 'pokemons' is already a list of queried Pokémons, thanks to SQLAlchemy:
+    for pokemon in pokemons:
+      # raw_data = queries.query_pokemon_id(pokemon)
+      pokemon_data.append(schemas.pokemon_schema.dump(pokemon))
+
+    return pokemon_data
