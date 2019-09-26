@@ -65,6 +65,8 @@ def pre_populate_types():
 
   db.session.commit()
 
+  return print("Success.")
+
 
 def pre_populate_gens():
   """
@@ -72,36 +74,38 @@ def pre_populate_gens():
   generation data. Execute this function only once, unless
   you have resetted the database.
   """
-  one = models.Generation(name="generation i", region="kanto",
+  one = models.Generation(name="generation-i", region="kanto",
     games="Red and Green, Blue, Red and Blue, Yellow")
   db.session.add(one)
 
-  two = models.Generation(name="generation ii", region="johto",
+  two = models.Generation(name="generation-ii", region="johto",
     games="Gold and Silver, Crystal")
   db.session.add(two)
 
-  three = models.Generation(name="generation iii", region="hoenn",
+  three = models.Generation(name="generation-iii", region="hoenn",
     games="Ruby and Sapphire, FireRed and LeafGreen, Emerald")
   db.session.add(three)
 
-  four = models.Generation(name="generation iv", region="sinnoh",
+  four = models.Generation(name="generation-iv", region="sinnoh",
     games="Diamond and Pearl, Platinum, HeartGold and SoulSilver")
   db.session.add(four)
 
-  five = models.Generation(name="generation v", region="unova",
+  five = models.Generation(name="generation-v", region="unova",
     games="Black and White, Black 2 and White 2")
   db.session.add(five)
 
-  six = models.Generation(name="generation vi", region="kalos",
+  six = models.Generation(name="generation-vi", region="kalos",
     games="X and Y, Omega Ruby and Alpha Sapphire")
   db.session.add(six)
 
-  seven = models.Generation(name="generation vii", region="alola",
+  seven = models.Generation(name="generation-vii", region="alola",
     games="Sun and Moon, Ultra Sun and Ultra Moon, Let's Go, Pikachu! and Let's Go, Eevee!")
   db.session.add(seven)
 
-  eight = models.Generation(name="generation viii", region="galar",
+  eight = models.Generation(name="generation-viii", region="galar",
     games="Sword and Shield")
   db.session.add(eight)
 
   db.session.commit()
+
+  return print("Success.")

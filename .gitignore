@@ -19,3 +19,4 @@ venv.bak/
 *.pyc
 *.pyo
 server/pythondex.db
+server/utils/temp/last_pokeapi_request.txt
