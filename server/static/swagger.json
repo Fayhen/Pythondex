@@ -1,0 +1,743 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "decription": "Small Pokedéx API made with Python 3.",
+    "version": "1.0.0",
+    "title": "Pythondex",
+    "contact": {
+      "email": "diego00alfa@gmail.com",
+      "github": "https://github.com/Fayhen"
+    },
+    "license": null
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Pokémon requests",
+      "description": "API for returning Pokémon general data."
+    },
+    {
+      "name": "Pokémon generation requests",
+      "description": "API for returning Pokémon generation data."
+    },
+    {
+      "name": "Pokémon type requests",
+      "description": "API for returning Pokémon type data."
+    },
+    {
+      "name": "Pokémon ability requests",
+      "description": "API for returning Pokémon ability data."
+    }
+  ],
+  "paths": {
+    "/pokemons/all": {
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns data on every registered Pokémon.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemons_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémons found! have you spoke with the Professor yet?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/pokemons/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémon data of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemon_schema"
+            }
+          },
+          "404": {
+            "description": "This Pokémon couldn't be found. Have you captured it yet?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/pokemons/{species}": {
+      "parameters": [
+        {
+          "name": "species",
+          "in": "path",
+          "required": true,
+          "description": "Name of the desired species",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémon data of matching species name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "species",
+            "required": true,
+            "description": "Pokémon species request name",
+            "schema": {
+              "$ref": "#/components/schemas/string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemon_schema"
+            }
+          },
+          "404": {
+            "description": "This Pokémon couldn't be found. Have you captured it yet?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/generations": {
+      "get": {
+        "tags": [
+          "Pokémon generation requests"
+        ],
+        "summary": "Returns data on every registered Pokémon generation.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/generations_schema"
+            }
+          },
+          "404": {
+            "description": "No generations found."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/generations/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired generation.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon generation requests"
+        ],
+        "summary": "Returns Pokémon generation data of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon generation request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/generation_schema"
+            }
+          },
+          "404": {
+            "description": "Generation not found. Is it from the future? If not please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/generations/{region}": {
+      "parameters": [
+        {
+          "name": "region",
+          "in": "path",
+          "required": true,
+          "description": "Generation's main region on corresponding core games",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon generation requests"
+        ],
+        "summary": "Returns Pokémon generation data of matching region name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "description": "Pokémon region name",
+            "schema": {
+              "$ref": "#/components/schemas/string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/generation_schema"
+            }
+          },
+          "404": {
+            "description": "Region not found. Is it from the future? If not please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/generations/{id}/pokemons": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired generation.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémons from generation of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon generation request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemons_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémons found. Have you catched any on this region?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/types": {
+      "get": {
+        "tags": [
+          "Pokémon type requests"
+        ],
+        "summary": "Returns data on every registered Pokémon type.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/types_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémon types found."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/types/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon type.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon type requests"
+        ],
+        "summary": "Returns Pokémon type data of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon type request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/type_schema"
+            }
+          },
+          "404": {
+            "description": "Pokémon type not found. Please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/types/{poke_type}": {
+      "parameters": [
+        {
+          "name": "poke_type",
+          "in": "path",
+          "required": true,
+          "description": "Name of the desired Pokémon type",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon type requests"
+        ],
+        "summary": "Returns Pokémon type data of matching name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "poke_type",
+            "required": true,
+            "description": "Pokémon type name",
+            "schema": {
+              "$ref": "#/components/schemas/string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/type_schema"
+            }
+          },
+          "404": {
+            "description": "Pokémon type not found. Was it typed right?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/types/{id}/pokemons": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon type.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémons from type of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon type request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemons_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémons of this type found. Have you catched any?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/abilities": {
+      "get": {
+        "tags": [
+          "Pokémon ability requests"
+        ],
+        "summary": "Returns data on every registered Pokémon ability.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/abilities_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémon abilities found! Have you catched any yet? Else please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/abilities/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon ability.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon ability requests"
+        ],
+        "summary": "Returns Pokémon ability data of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon ability request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/ability_schema"
+            }
+          },
+          "404": {
+            "description": "Ability not found. Have you found a Pokémon that has it yet?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/abilities/{ability}": {
+      "parameters": [
+        {
+          "name": "ability",
+          "in": "path",
+          "required": true,
+          "description": "Name of the desired Pokémon ability",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon ability requests"
+        ],
+        "summary": "Returns Pokémon ability data of matching name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ability",
+            "required": true,
+            "description": "Pokémon ability name",
+            "schema": {
+              "$ref": "#/components/schemas/string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/ability_schema"
+            }
+          },
+          "404": {
+            "description": "Ability not found. Have you found a Pokémon that has it yet?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/abilities/{id}/pokemons": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon ability.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémons possessing ability of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon ability request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemons_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémons with this ability found. Have you found any that has it yet? Else, please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "properties": {
+          "uuid": {
+            "type": "string"
+          }
+        }
+      },
+      "string": {
+        "properties": {
+          "uuid": {
+            "type": "string"
+          }
+        }
+      },
+      "pokemons_schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/pokemon_schema"
+        }
+      },
+      "pokemon_schema": {
+        "type": "object",
+        "properties": {
+          "abilities": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "base_attack": {
+            "type": "integer"
+          },
+          "base_defese": {
+            "type": "integer"
+          },
+          "base_hp": {
+            "type": "integer"
+          },
+          "base_sp_atk": {
+            "type": "integer"
+          },
+          "base_sp_def": {
+            "type": "integer"
+          },
+          "base_speed": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "generation": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "height": {
+            "type":"integer"
+          },
+          "id": {
+            "type":"integer"
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "weight": {
+            "type":"integer"
+          }
+        }
+      },
+      "generations_schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/generation_schema"
+        }
+      },
+      "generation_schema": {
+        "type": "object",
+        "properties": {
+          "games": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pokemon": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "region": {
+            "type": "string"
+          }
+        }
+      },
+      "types_schema": {
+        "type": "array",
+        "items": {
+          "$ref":"#/components/schemas/type_schema"
+        }
+      },
+      "type_schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type" :"string"
+          },
+          "pokemon": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "abilities_schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ability_schema"
+        }
+      },
+      "ability_schema": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pokemon": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

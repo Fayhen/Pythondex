@@ -13,7 +13,7 @@ def gotta_catch_em_all():
       err_msg = "No Pokémons found! have you spoke with the Professor yet?"
       return make_response(err_msg, 404)
     else:
-      return make_response(jsonify(schemas.pokemons_schema.dump(pokemons), 200))
+      return make_response(jsonify(schemas.pokemons_schema.dump(pokemons)), 200)
 
   except Exception as e:
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
@@ -66,7 +66,7 @@ def get_gen_id(id):
   try:
     gen = queries.query_pokemon_gen(id)
     if gen is None:
-      err_msg = "Region not found. Is it from the future? If not please contact the developer for this issue."
+      err_msg = "Generation not found. Is it from the future? If not please contact the developer for this issue."
       make_response(err_msg, 404)
     else:
       return make_response(jsonify(schemas.gen_schema.dump(gen)), 200)
@@ -213,3 +213,8 @@ def get_ability_pokemons(id):
 
   except Exception as e:
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
+
+
+@app.route("/static/<path:path>")
+def send_static():
+  return send_from_directory('static', path)
