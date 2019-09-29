@@ -140,6 +140,48 @@
         }
       }
     },
+    "/pokemons/{id}/evolution": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémons from the evolution chain of the Pokémon of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemons_schema"
+            }
+          },
+          "404": {
+            "description": "Requested Pokémon couldn't be found. Have you captured it yet?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
     "/generations": {
       "get": {
         "tags": [
@@ -622,6 +664,9 @@
           "base_defese": {
             "type": "integer"
           },
+          "base_experience": {
+            "type": "integer"
+          },
           "base_hp": {
             "type": "integer"
           },
@@ -636,6 +681,14 @@
           },
           "description": {
             "type": "string"
+          },
+          "evolves_from": {
+            "type": "string",
+            "nullable": true
+          },
+          "evolves_into": {
+            "type": "string",
+            "nullable": true
           },
           "generation": {
             "type": "array",

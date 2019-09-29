@@ -3,21 +3,25 @@ import requests
 from server import app, db
 import server.models as models
 from server.utils.pokeAPI import (parse_argument, set_types, set_stats,
-  set_abilities, set_description_generation, write_file)
+  set_abilities, set_desc_gen_evolution, write_file)
 
 
 def pre_populate_pokemons(continue_from_last=False):
   """
-  This function will fetch Pokémon data from PokéAPI(https://pokeapi.co/),
-  including their abilities, adding to the database if needed and otherwise
-  linking them to each Pokémon. It is necessary to execute the fuctions
-  'pre_populate_types' and 'pre_populate_gens' contained within this file,
-  otherwise an exception error will be raised.
+  This package was made to fetch Pokémon data from PokéAPI(https://pokeapi.co/).
+  Data retrieved includes all the necessary attributes declared on the 'Pokemon'
+  model. Assotiated requests will also provide all abilities of each Pokémon,
+  adding them to the database as needed.
+  
+  This function does not auto-populates Pokémon types and generations. It is
+  necessary to execute utility fuctions 'pre_populate_types' and 'pre_populate_gens'
+  provided within 'server/utils/database_utils.py' on a Python 3 interpreter.
+  Otherwise, an exception error will be raised.
 
   This function can only fetch 19 Pokémons at a time. This is due to limitations
   to the number of API requests from PókeAPI. URL offsets returned in PokéAPI
   responses are stored on a temporary 'last_pokeapi_request.txt' file. This file
-  can be used to fetch new Pokémon, continuing from the previous request.
+  is used to fetch new Pokémon, continuing from the previous batch.
   
   *args:
   - continue_from_last (default: False)
@@ -58,6 +62,8 @@ def pre_populate_pokemons(continue_from_last=False):
       print(f"Height: '{height}'.")
       weight = response_data["weight"]
       print(f"Weight: '{weight}'.")
+      base_xp = response_data["base_experience"]
+      print(f"Base experience: '{base_xp}'.")
 
       # Set Pokémon types using helper function
       all_types = [poke_type["type"]["name"] for poke_type in response_data["types"]]
@@ -83,10 +89,11 @@ def pre_populate_pokemons(continue_from_last=False):
       print(f"Exited 'set_abilities' with: {abilities}'\n\n.")
 
       # Retrieve Pokémon description and generation using helper function
-      # Also set the timing of the last request to PokéAPI
+      # Function updates 'evolves_into' attribute upon subsequent requests
+      # Also returns timing of the last request to PokéAPI
       species_url = response_data["species"]["url"]
       print(f"Species URL:'{species_url}'.")
-      request_time, generation, description = set_description_generation.run(species_url)
+      request_time, generation, description, evolves_from = set_desc_gen_evolution.run(species_url, name)
       print(f"Retrieved: '{request_time}', '{generation}', '{description}''.\n\n")
 
       # Instantiate new Pokémon
@@ -95,12 +102,15 @@ def pre_populate_pokemons(continue_from_last=False):
         description = description,
         height = height,
         weight = weight,
+        base_experience = base_xp,
         base_hp = base_hp,
         base_attack = base_attack, 
         base_defense = base_defense,
         base_speed = base_speed,
         base_sp_atk = base_sp_atk,
-        base_sp_def = base_sp_def
+        base_sp_def = base_sp_def,
+        evolves_from = evolves_from,
+        evolves_into = None,
       )
       print("New Pokémon instantiated.")
       

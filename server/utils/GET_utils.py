@@ -1,5 +1,6 @@
 import server.queries as queries
 import server.schemas as schemas
+from server.models import Pokemon
 
 """
 Functions within this file are provided in order to reduce
@@ -77,3 +78,39 @@ def get_pokemons_with_ability(id):
       pokemon_data.append(schemas.pokemon_schema.dump(pokemon))
 
     return pokemon_data
+
+
+def get_pokemon_evolution(pokemon):
+  """
+  Returns a Pokémon's evolution chain represented as a list
+  of the Pokémons evolutionary stages, previous and past.
+  Returns a list with single Pokémon if it has no other forms.
+  Receives a queried Pokemon object as argument.
+  """
+  def query_stage(species):
+    """
+    Called to return either a previous or next evolution of the
+    current Pokémon, based on its respective species name.
+    """
+    stage = Pokemon.query.filter_by(species=species).first()
+
+    return stage
+  
+  evolution_chain = []
+  evolution_chain.append(pokemon)
+
+  while True:
+    if pokemon.evolves_from:
+      pokemon = query_stage(pokemon.evolves_from)
+      evolution_chain.append(pokemon)
+    else:
+      break
+
+  while True:
+    if pokemon.evolves_into:
+      pokemon = query_stage(pokemon.evolves_into)
+      evolution_chain.append(pokemon)
+    else:
+      break
+  
+  return evolution_chain

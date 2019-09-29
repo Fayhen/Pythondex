@@ -47,6 +47,21 @@ def get_pokemon_sp(species):
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
 
 
+@app.route("/pokemons/<int:id>/evolution", methods=["GET"])
+def get_pokemon_evolution(id):
+  try:
+    pokemon = queries.query_pokemon_id(id)
+    if pokemon is None:
+      err_msg = "Requested Pokémon couldn't be found. Have you captured it yet?"
+      return make_response(err_msg, 404)
+    else:
+      evolution_chain = fetch.get_pokemon_evolution(pokemon)
+      return make_response(jsonify(schemas.pokemons_schema.dump(evolution_chain)), 200)
+
+  except Exception as e:
+    return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
+
+
 @app.route("/generations", methods=["GET"])
 def get_gens():
   try:

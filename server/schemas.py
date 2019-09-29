@@ -19,19 +19,6 @@ class PokemonSchema(ma.ModelSchema):
     model = models.Pokemon
 
 
-# class PokeTypeSchema(ma.TableSchema):
-#   class Meta:
-#     table = models.helper_pokemon_type
-
-# class PokeAbilitySchema(ma.TableSchema):
-#   class Meta:
-#     table = models.helper_pokemon_ability
-
-# class PokeGenSchenma(ma.TableSchema):
-#   class Meta:
-#     table = models.helper_pokemon_generation
-
-
 # Schemas initialization
 type_schema = TypesSchema()
 types_schema = TypesSchema(many=True)

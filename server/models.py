@@ -31,12 +31,15 @@ class Pokemon(db.Model):
   description = db.Column(db.String(120), nullable=False)
   height = db.Column(db.Integer, nullable=False)
   weight = db.Column(db.Integer, nullable=False)
+  base_experience = db.Column(db.Integer, nullable=False)
   base_hp = db.Column(db.Integer, nullable=False)
   base_attack = db.Column(db.Integer, nullable=False)
   base_defense = db.Column(db.Integer, nullable=False)
   base_speed = db.Column(db.Integer, nullable=False)
   base_sp_atk = db.Column(db.Integer, nullable=False)
   base_sp_def = db.Column(db.Integer, nullable=False)
+  evolves_from = db.Column(db.String, nullable=True)
+  evolves_into = db.Column(db.String, nullable=True)
   types = db.relationship("Types",
     secondary = lambda: helper_pokemon_type,
     back_populates = "pokemon"

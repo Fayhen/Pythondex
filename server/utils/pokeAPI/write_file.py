@@ -13,10 +13,16 @@ def run(request_time, next_url, previous_url):
   previous_url: The last requested issued to PokéAPI for Pokémon data retrieval.
 
   """
-  filename = os.path.join(app.root_path, "utils", "temp", "last_pokeapi_request.txt")
+  # Ensure path exists
+  filepath = os.path.join(app.root_path, "utils", "temp")
+  if not os.path.exists(filepath):
+    os.makedirs(filepath)
+  
+  filename = os.path.join(filepath, "last_pokeapi_request.txt")
 
-  print(f"Removing previous 'last_pokeapi_request.txt' at '{filename}'...")
+  # Erase previous file
   if os.path.exists(filename):
+    print(f"Removing previous 'last_pokeapi_request.txt' at '{filename}'...")
     os.remove(filename)
 
   print("Writing new file...\n")
