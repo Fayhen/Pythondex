@@ -48,6 +48,14 @@ def run(species_url, name):
   queried_gen = models.Generation.query.filter_by(name=generation_name).first()
   generation = [queried_gen.id]
 
+  # Retrieve Pokémon habitat and query from database
+  # Dashed habitat names are converted to Pythondex's model
+  habitat = species_data["habitat"]["name"]
+  habitat = habitat.replace("-", "_")
+  print(f"Got habitat: '{habitat}'.")
+  queried_hab = models.Habitat.query.filter_by(name=habitat).first()
+  habitat = [queried_hab.id]
+
   # Iterate for Pokémon description in English on response data
   all_descriptions = species_data["flavor_text_entries"]
   print("Entering 'all_descriptions' loop.")
@@ -60,4 +68,4 @@ def run(species_url, name):
   print("Broke loop.\n")
 
   # Return relevant data to main function
-  return request_time, generation, description, evolves_from
+  return request_time, generation, description, evolves_from, habitat

@@ -230,6 +230,63 @@ def get_ability_pokemons(id):
     return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
 
 
+@app.route("/habitats", methods=["GET"])
+def get_habitats():
+  try:
+    habitats = queries.query_habitats()
+    if habitats is None:
+      err_msg = "No Pokémon habitats found."
+      return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(schemas.habitats_schema.dump(habitats)), 200)
+
+  except Exception as e:
+    return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
+
+
+@app.route("/habitats/<int:id>", methods=["GET"])
+def get_habitat_id(id):
+  try:
+    habitat = queries.query_pokemon_habitat_id(id)
+    if habitat is None:
+      err_msg = "Pokémon habitat not found. Please contact the developer for this issue."
+      return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(schemas.habitat_schema.dump(habitat)), 200)
+
+  except Exception as e:
+    return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
+
+
+@app.route("/habitats/<habitat>", methods=["GET"])
+def get_habitat_named(habitat):
+  try:
+    habitat = queries.query_pokemon_habitat(habitat)
+    if habitat is None:
+      err_msg = "Pokémon habitat not found. Was it typed right? Else, please contact the developer for this issue."
+      return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(schemas.habitat_schema.dump(habitat)), 200)
+
+  except Exception as e:
+    return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
+
+
+@app.route("/habitats/<int:id>/pokemons", methods=["GET"])
+def get_habitat_pokemons(id):
+  try:
+    pokemons = fetch.get_pokemons_of_habitat(id)
+    if pokemons is None:
+      err_msg = "No Pokémons from this habitat found. Have you explored it?"
+      return make_response(err_msg, 404)
+    else:
+      return make_response(jsonify(schemas.pokemons_schema.dump(pokemons)), 200)
+
+  except Exception as e:
+    return make_response("Internal error. Please contact the developer. Error:\n" + str(e), 500)
+
+
+
 @app.route("/static/<path:path>")
 def send_static():
   return send_from_directory('static', path)

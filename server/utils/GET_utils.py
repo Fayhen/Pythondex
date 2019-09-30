@@ -56,6 +56,29 @@ def get_pokemons_of_type(id):
     return pokemon_data
 
 
+def get_pokemons_of_habitat(id):
+  """
+  Queries Pokémon from a habitat using the 'id' passed as argument.
+  Iterates over the foreign keys listed on the 'pokemon' table
+  column. At each iteration, queries the Pokémon and stores its
+  data in a variable. This data is then serialized and appended
+  to an array, which is returned by the function. This array can
+  be readily passed to Flask's 'jsonify' function when sending
+  HTTP responses.
+  """
+  habitat = queries.query_pokemon_habitat_id(id)
+  if habitat is None:
+    return None
+  else:
+    pokemons = habitat.pokemon
+    pokemon_data = []
+    # 'pokemons' is already a list of queried Pokémons, thanks to SQLAlchemy:
+    for pokemon in pokemons:
+      pokemon_data.append(schemas.pokemon_schema.dump(pokemon))
+
+    return pokemon_data
+
+
 def get_pokemons_with_ability(id):
   """
   Queries a Pokémon ability using the 'id' passed as argument.

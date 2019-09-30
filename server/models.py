@@ -25,6 +25,12 @@ class Generation(db.Model):
     secondary=lambda: helper_pokemon_generation, back_populates="generation")
 
 
+class Habitat(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String, unique=True, nullable=False)
+  pokemon = db.relationship("Pokemon",
+      secondary=lambda: helper_pokemon_habitat, back_populates="habitat")
+
 class Pokemon(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   species = db.Column(db.String, unique=True, nullable=False)
@@ -52,6 +58,10 @@ class Pokemon(db.Model):
     secondary = lambda: helper_pokemon_generation,
     back_populates= "pokemon"
   )
+  habitat = db.relationship("Habitat",
+    secondary = lambda: helper_pokemon_habitat,
+    back_populates= "pokemon"
+  )
 
 
 helper_pokemon_type = db.Table("helper_pokemon_type",
@@ -69,4 +79,10 @@ helper_pokemon_ability = db.Table("helper_pokemon_ability",
 helper_pokemon_generation = db.Table("helper_pokemon_generation",
   db.Column("pokemon", db.Integer, db.ForeignKey(Pokemon.id)),
   db.Column("generation", db.Integer, db.ForeignKey(Generation.id))
+)
+
+
+helper_pokemon_habitat = db.Table("helper_pokemon_habitat",
+  db.Column("pokemon", db.Integer, db.ForeignKey(Pokemon.id)),
+  db.Column("habitat", db.Integer, db.ForeignKey(Habitat.id))
 )

@@ -109,3 +109,48 @@ def pre_populate_gens():
   db.session.commit()
 
   return print("Success.")
+
+
+def pre_populate_habitats():
+  """
+  This function populates the database with basic Pokémon
+  habitat data. Execute this function only once, unless you
+  have resetted the database.
+  """
+  cave = models.Habitat(name="cave")
+  db.session.add(cave)
+
+  forest = models.Habitat(name="forest")
+  db.session.add(forest)
+
+  grassland = models.Habitat(name="grassland")
+  db.session.add(grassland)
+
+  mountain = models.Habitat(name="mountain")
+  db.session.add(mountain)
+
+  rare = models.Habitat(name="rare")
+  db.session.add(rare)
+
+  rough_terrain = models.Habitat(name="rough_terrain")
+  db.session.add(rough_terrain)
+
+  sea = models.Habitat(name="sea")
+  db.session.add(sea)
+
+  waters_edge = models.Habitat(name="waters_edge")
+  db.session.add(waters_edge)
+
+  db.session.commit()
+
+  return print("Success.")
+
+
+def pre_populate():
+  try:
+    pre_populate_types()
+    pre_populate_gens()
+    pre_populate_habitats()
+    return print("Success. Types, generations and habitats added to database.")
+  except Exception as e:
+    return e

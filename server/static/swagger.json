@@ -31,6 +31,10 @@
     {
       "name": "Pokémon ability requests",
       "description": "API for returning Pokémon ability data."
+    },
+    {
+      "name": "Pokémon habitat requests",
+      "description": "API for returning Pokémon habitat data."
     }
   ],
   "paths": {
@@ -625,6 +629,154 @@
           }
         }
       }
+    },
+    "/habitats": {
+      "get": {
+        "tags": [
+          "Pokémon habitat requests"
+        ],
+        "summary": "Returns data on every registered Pokémon habitat.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/habitats_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémon habitats found."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/habitats/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon habitat.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon habitat requests"
+        ],
+        "summary": "Returns Pokémon habitat data of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon habitat request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/habitat_schema"
+            }
+          },
+          "404": {
+            "description": "Pokémon habitat not found. Please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/habitats/{habitat}": {
+      "parameters": [
+        {
+          "name": "habitat",
+          "in": "path",
+          "required": true,
+          "description": "Name of the desired Pokémon habitat",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon habitat requests"
+        ],
+        "summary": "Returns Pokémon habitat data of matching name.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "habitat",
+            "required": true,
+            "description": "Pokémon habitat name",
+            "schema": {
+              "$ref": "#/components/schemas/string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/habitat_schema"
+            }
+          },
+          "404": {
+            "description": "Pokémon habitat not found. Was it typed right? Else, please contact the developer for this issue."
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
+    },
+    "/habitats/{id}/pokemons": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Matching database ID of the desired Pokémon habitat.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Pokémon requests"
+        ],
+        "summary": "Returns Pokémons from the habitat of matching ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Pokémon habitat request ID",
+            "schema": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/pokemons_schema"
+            }
+          },
+          "404": {
+            "description": "No Pokémons from this habitat found. Have you explored it?"
+          },
+          "500": {
+            "description": "Internal error. Please contact the developer."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -788,6 +940,23 @@
             "items": {
               "type": "integer"
             }
+          }
+        }
+      },
+      "habitats_schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/habitat_schema"
+        }
+      },
+      "habitat_schema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
           }
         }
       }

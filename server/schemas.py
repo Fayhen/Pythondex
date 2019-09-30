@@ -14,6 +14,10 @@ class GenerationSchema(ma.ModelSchema):
   class Meta:
     model = models.Generation
 
+class HabitatShema(ma.ModelSchema):
+  class Meta:
+    model = models.Habitat
+
 class PokemonSchema(ma.ModelSchema):
   class Meta:
     model = models.Pokemon
@@ -26,5 +30,7 @@ ability_schema = AbilitiesSchema()
 abilities_schema = AbilitiesSchema(many=True)
 gen_schema = GenerationSchema()
 gens_schema = GenerationSchema(many=True)
+habitat_schema = HabitatShema()
+habitats_schema = HabitatShema(many=True)
 pokemon_schema = PokemonSchema()
 pokemons_schema = PokemonSchema(many=True)

@@ -1,6 +1,6 @@
 from server import db
 from server.models import (Types, Abilities, 
-  Generation, Pokemon)
+  Generation, Habitat, Pokemon)
 
 
 def gotta_catch_em_all():
@@ -64,9 +64,8 @@ def query_pokemon_region(region):
 
 def query_pokemon_ability_id(id):
   """
-  Returns a Pokémon  ability by its name, including all Pokémons
-  currently possessing it. Argument 'ability' should be string
-  contaning a single ability name. Ex.: 'splash'.
+  Returns a Pokémon ability by its 'id', including all Pokémons
+  currently possessing it.
   """
   return Abilities.query.get(id)
 
@@ -78,6 +77,24 @@ def query_pokemon_ability(ability):
   contaning a single ability name. Ex.: 'splash'.
   """
   return Abilities.query.filter_by(name=ability).first()
+
+
+def query_pokemon_habitat_id(id):
+  """
+  Returns Pokémon habitat by its id on the database. These should
+  be pre-populated on the database via provided utility script. Data
+  includes currently available Pokémons found on this habitat.
+  """
+  return Habitat.query.get(id)
+
+
+def query_pokemon_habitat(habitat):
+  """
+  Returns Pokémon habitat by searching its name. These should
+  be pre-populated on the database via provided utility script. Data
+  includes currently available Pokémons found on this habitat.
+  """
+  return Habitat.query.filter_by(name=habitat).first()
 
 
 def query_types():
@@ -99,3 +116,10 @@ def query_abilities():
   Returns all Pokémon abilities on the database.
   """
   return Abilities.query.all()
+
+
+def query_habitats():
+  """
+  Returns all Pokémon habitats on the database.
+  """
+  return Habitat.query.all()

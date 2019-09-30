@@ -3,7 +3,7 @@ import requests
 from server import app, db
 import server.models as models
 from server.utils.pokeAPI import (parse_argument, set_types, set_stats,
-  set_abilities, set_desc_gen_evolution, write_file)
+  set_abilities, set_desc_gen_evo_hab, write_file)
 
 
 def pre_populate_pokemons(continue_from_last=False):
@@ -93,7 +93,8 @@ def pre_populate_pokemons(continue_from_last=False):
       # Also returns timing of the last request to PokéAPI
       species_url = response_data["species"]["url"]
       print(f"Species URL:'{species_url}'.")
-      request_time, generation, description, evolves_from = set_desc_gen_evolution.run(species_url, name)
+
+      request_time, generation, description, evolves_from, habitats = set_desc_gen_evo_hab.run(species_url, name)
       print(f"Retrieved: '{request_time}', '{generation}', '{description}''.\n\n")
 
       # Instantiate new Pokémon
@@ -144,6 +145,14 @@ def pre_populate_pokemons(continue_from_last=False):
           generation=generation_id)
         db.session.execute(insert)
       print("Data inserted into table 'helper_pokemon_generation'.\n")
+
+      # Add Pokémon-Types relationships through insertions into helper table
+      print("Executing insertions into table 'helper_pokemon_habitat'.")
+      for habitat_id in habitats:
+        insert = models.helper_pokemon_habitat.insert().values(pokemon=new_pokemon.id,
+          habitat=habitat_id)
+        db.session.execute(insert)
+
 
       # Commit insertions to database
       db.session.commit()
