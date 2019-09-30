@@ -3,7 +3,7 @@ import server.schemas as schemas
 from server.models import Pokemon
 
 """
-Functions within this file are provided in order to reduce
+Functions within this module are provided in order to reduce
 code inside routing functions, in cases where query objects
 require a little more data manipulation before sending
 responses to GET requests.

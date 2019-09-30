@@ -25,15 +25,17 @@ def pre_populate_pokemons(continue_from_last=False):
   to the number of API requests from PókeAPI. URL offsets returned in PokéAPI
   responses are stored on a temporary 'last_pokeapi_request.txt' file. This file
   is used to fetch new Pokémon, continuing from the previous batch.
+
+  Avoid running this function over previously fetched Pokémons, otherwise it will
+  compromise database integrity. It is ideal to only run 'pokeAPI' from the
+  beginning if database data was completely reset.
   
   *args:
   - continue_from_last (default: False)
   If 'True', sets up the request based on the data in 'last_pokeapi_request.txt'.
   Also ensures minimum amount of time between requests has elapsed. If 'False',
   fetches initial data using the provided base URL. Note that these will override
-  data on 'last_pokeapi_request.txt', if any. Also note that no Pokémons will be
-  added if this functions has been previously executed with its default argument,
-  and also time between requests must be elapsed before reattempting.
+  data on 'last_pokeapi_request.txt', if any.
   """
   # Retrieve base URL using helper function
   base_url = parse_argument.run(continue_from_last)
@@ -98,7 +100,6 @@ def pre_populate_pokemons(continue_from_last=False):
       print(f"Species URL:'{species_url}'.")
 
       request_time, generation, description, evolves_from, habitats = set_desc_gen_evo_hab.run(species_url, name)
-      print(f"Retrieved: '{request_time}', '{generation}', '{description}''.\n\n")
 
       # Instantiate new Pokémon
       new_pokemon = models.Pokemon(

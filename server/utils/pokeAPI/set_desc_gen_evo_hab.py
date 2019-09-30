@@ -6,7 +6,7 @@ from server import db
 def run(species_url, name):
   """
   Returns last PokéAPI request time and the current Pokémon's descripton, generation,
-  evolution chain and habitat. Requires 'species_url' and the current Pokémon instance
+  evolution info and habitat. Requires 'species_url' and the current Pokémon instance
   name.
 
   *args
@@ -37,9 +37,12 @@ def run(species_url, name):
     print(f"Found previous evolutionary stage: '{evolves_from}'.")
     print(f"Updating evolution chain...")
     previous_stage = models.Pokemon.query.filter_by(species=evolves_from).first()
-    previous_stage.evolves_into = name
-    db.session.commit()
-    print("Update successful.\n")
+    if previous_stage is not None:
+      previous_stage.evolves_into = name
+      db.session.commit()
+      print("Update successful.\n")
+    else:
+      print("Previous stage not yet on database. Stage left as 'None'.")
   else:
     evolves_from = None
 

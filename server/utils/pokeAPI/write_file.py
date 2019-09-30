@@ -4,8 +4,8 @@ from server import app
 
 def run(request_time, next_url, previous_url):
   """
-  This helper function will write an updated 'last_pokeapi_request.txt',
-  provided it received the right arguments.
+  This helper function will write an updated 'last_pokeapi_request.txt' file,
+  provided it receives the correct arguments.
   
   *args:
   request_time: The time the last request to PokéAPI was issued.

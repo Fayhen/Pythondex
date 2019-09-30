@@ -138,6 +138,9 @@ def pre_populate_habitats():
   sea = models.Habitat(name="sea")
   db.session.add(sea)
 
+  urban = models.Habitat(name="urban")
+  db.session.add(urban)
+
   waters_edge = models.Habitat(name="waters_edge")
   db.session.add(waters_edge)
 
@@ -147,6 +150,11 @@ def pre_populate_habitats():
 
 
 def pre_populate():
+  """
+  Pre-populates the database with Pokémon types, generations
+  and habitats in succession. Either execute this function alone
+  or the ones above individually, not both.
+  """
   try:
     pre_populate_types()
     pre_populate_gens()

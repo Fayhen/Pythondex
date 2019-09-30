@@ -1,6 +1,6 @@
 def run(all_stats):
   """
-  This helper function receives and iterates over a base stats object retrieved
+  This helper function receives and iterates over an object of base stats retrieved
   from PokéAPI, for the current Pokémon instance. At each iteration the stat
   name is checked for and set accordingly. A dict with the base stats is returned.
   """
