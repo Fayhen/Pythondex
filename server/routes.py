@@ -77,7 +77,7 @@ def get_gens():
 
 
 @app.route("/generations/<int:id>", methods=["GET"])
-def get_gen_id(id):
+def get_gen(id):
   try:
     gen = queries.query_pokemon_gen(id)
     if gen is None:
@@ -91,7 +91,7 @@ def get_gen_id(id):
 
 
 @app.route("/generations/<region>", methods=["GET"])
-def get_gen(region):
+def get_gen_region(region):
   try:
     gen = queries.query_pokemon_region(region)
     if gen is None:
@@ -245,7 +245,7 @@ def get_habitats():
 
 
 @app.route("/habitats/<int:id>", methods=["GET"])
-def get_habitat_id(id):
+def get_habitat(id):
   try:
     habitat = queries.query_pokemon_habitat_id(id)
     if habitat is None:

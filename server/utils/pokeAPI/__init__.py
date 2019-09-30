@@ -13,10 +13,13 @@ def pre_populate_pokemons(continue_from_last=False):
   model. Assotiated requests will also provide all abilities of each Pokémon,
   adding them to the database as needed.
   
-  This function does not auto-populates Pokémon types and generations. It is
-  necessary to execute utility fuctions 'pre_populate_types' and 'pre_populate_gens'
-  provided within 'server/utils/database_utils.py' on a Python 3 interpreter.
-  Otherwise, an exception error will be raised.
+  This function does not auto-populates Pokémon types, generations and habitats.
+  Correct execution requires this data to be already on the database, on a model
+  compatible with PokéAPI.  It is recommended to execute the utility fuctions
+  'pre_populate_types', 'pre_populate_gens' and pre_populate_habitats', provided
+  within 'server/utils/database_utils.py', on a Python 3 interpreter. The function
+  'pre_populate' on the same file will execute all the aforementioned functions
+  subsequently, for your convenience.
 
   This function can only fetch 19 Pokémons at a time. This is due to limitations
   to the number of API requests from PókeAPI. URL offsets returned in PokéAPI

@@ -5,8 +5,9 @@ from server import db
 
 def run(species_url, name):
   """
-  Returns last request time and the current Pokémon's descripton, generation and
-  evolution chain. Requires 'species_url' and the current Pokémon instance name.
+  Returns last PokéAPI request time and the current Pokémon's descripton, generation,
+  evolution chain and habitat. Requires 'species_url' and the current Pokémon instance
+  name.
 
   *args
   - 'species_url': URL provided on the response data on each Pokémon request to

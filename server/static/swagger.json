@@ -807,7 +807,19 @@
           "abilities": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
             }
           },
           "base_attack": {
@@ -845,7 +857,37 @@
           "generation": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
+            }
+          },
+          "habitat": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
             }
           },
           "height": {
@@ -857,8 +899,24 @@
           "types": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
             }
+          },
+          "url": {
+            "type":"string",
+            "format": "url"
           },
           "weight": {
             "type":"integer"
@@ -886,11 +944,27 @@
           "pokemon": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "species": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
             }
           },
           "region": {
             "type": "string"
+          },
+          "url": {
+            "type":"string",
+            "format": "url"
           }
         }
       },
@@ -912,8 +986,24 @@
           "pokemon": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "species": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
             }
+          },
+          "url": {
+            "type":"string",
+            "format": "url"
           }
         }
       },
@@ -938,8 +1028,24 @@
           "pokemon": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "species": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
             }
+          },
+          "url": {
+            "type":"string",
+            "format": "url"
           }
         }
       },
@@ -957,6 +1063,28 @@
           },
           "name": {
             "type": "string"
+          },
+          "pokemon": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "species": {
+                  "type": "string"
+                },
+                "url": {
+                  "type":"string",
+                  "format": "url"
+                }
+              }
+            }
+          },
+          "url": {
+            "type":"string",
+            "format": "url"
           }
         }
       }
